@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true, // 同上
     "strict": true, //启用所有严格类型检查选项
     "forceConsistentCasingInFileNames": true, //禁止对同一个文件的不一致的引用
-    "module": "umd", //指定生成哪个模块系统代码
+    "module": "commonjs", //指定生成哪个模块系统代码
     "moduleResolution": "node", //决定如何处理模块。
     // "resolveJsonModule": true,
     "isolatedModules": false, //将每个文件作为单独的模块（与“ts.transpileModule”类似）。

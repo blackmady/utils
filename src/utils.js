@@ -1,75 +1,79 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const utils = {
-    getType(v) {
+exports.__esModule = true;
+var utils = {
+    getType: function (v) {
         return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
     },
-    isType(obj, type) {
+    isType: function (obj, type) {
         return utils.getType(obj) === type;
     },
-    isObject(v) {
+    isObject: function (v) {
         return typeof v === 'object';
     },
-    isNumber(v) {
+    isNumber: function (v) {
         return typeof v === 'number';
     },
-    isArray(v) {
+    isArray: function (v) {
         return Array.isArray(v);
     },
-    isBoolean(v) {
+    isBoolean: function (v) {
         return typeof v === 'boolean';
     },
-    isFunction(v) {
+    isFunction: function (v) {
         return typeof v === 'function';
     },
-    isPercent(v) {
+    isPercent: function (v) {
         return /%$/.test(v + '');
     },
-    isPlainObject(v) {
+    isPlainObject: function (v) {
         return utils.getType(v === 'object');
     },
     // 是否为空(0,'',undefined,null,false,{},[] 都被认为是空)
-    isEmpty(v) {
-        const r = ({
-            object: (v) => !Object.keys(v).length,
-            array: (v) => !v.length,
+    isEmpty: function (v) {
+        var r = ({
+            object: function (v) { return !Object.keys(v).length; },
+            array: function (v) { return !v.length; }
         })[utils.getType(v)];
         return r === void (0) ? !v : r;
     },
     //类数组转数组
-    toArray(v) {
-        return Array.prototype.map.call(v, n => n);
+    toArray: function (v) {
+        return Array.prototype.map.call(v, function (n) { return n; });
     },
     // 对象按key排序
-    sortObject(obj) {
-        let tmp = {};
-        Object.keys(obj).sort((a, b) => a > b ? 1 : -1).forEach(key => tmp[key] = obj[key]);
+    sortObject: function (obj) {
+        var tmp = {};
+        Object.keys(obj).sort(function (a, b) { return a > b ? 1 : -1; }).forEach(function (key) { return tmp[key] = obj[key]; });
         return tmp;
     },
     // 把objs的对象属性合并到target中，深层合并，不同于Object.assign的单层合并，常用于函数的option类的参数与默认参数合并
-    merge(target, ...objs) {
+    merge: function (target) {
+        var objs = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            objs[_i - 1] = arguments[_i];
+        }
         if (!objs.length) {
             objs = [target];
             target = {};
         }
-        let obj = objs[0];
-        for (let key in obj) {
-            let tv = target[key];
-            let ov = obj[key];
+        var obj = objs[0];
+        for (var key in obj) {
+            var tv = target[key];
+            var ov = obj[key];
             if (utils.isObject(tv) && utils.isObject(ov)) {
                 utils.merge(target[key], obj[key]);
                 continue;
             }
             target[key] = obj[key];
         }
-        let nobjs = objs.slice(1);
-        return nobjs.length ? utils.merge(target, ...nobjs) : target;
+        var nobjs = objs.slice(1);
+        return nobjs.length ? utils.merge.apply(utils, [target].concat(nobjs)) : target;
     },
     // 缓存函数返回值
-    cached: (fn) => {
-        const cache = Object.create(null);
+    cached: function (fn) {
+        var cache = Object.create(null);
         return function (str) {
-            const hit = cache[str];
+            var hit = cache[str];
             return hit || (cache[str] = fn(str));
         };
     },
@@ -77,13 +81,13 @@ const utils = {
     search2Json: function (search) {
         //无参数时默认返回window.location.search 转换成JSON后的对象
         //1个参数时把此参数当成search看待
-        const obj = Object.create(null);
+        var obj = Object.create(null);
         search = search || window.location.search;
         if (!search)
             return obj;
-        const arr = search.replace(/^\?/g, '').replace(/\#/g, '').split('&');
-        for (let i = 0; i < arr.length; i++) {
-            const tmp = arr[i].split('=');
+        var arr = search.replace(/^\?/g, '').replace(/\#/g, '').split('&');
+        for (var i = 0; i < arr.length; i++) {
+            var tmp = arr[i].split('=');
             obj[tmp[0]] = obj[tmp[0]] ? (obj[tmp[0]] instanceof Array) ? obj[tmp[0]].concat(tmp[1]) : [obj[tmp[0]], tmp[1]] : tmp[1];
             obj[tmp[0]] = decodeURIComponent(obj[tmp[0]]);
         }
@@ -92,21 +96,21 @@ const utils = {
     //简单倒计时
     timers: Object.create(null),
     countdown: function (name, timeout, ticker) {
-        let timer;
+        var timer;
         if (utils.timers[name]) {
             timer = utils.timers[name];
         }
         else {
-            class Timer {
-                constructor(name, timeout) {
+            var Timer = /** @class */ (function () {
+                function Timer(name, timeout) {
                     this.tid = 0;
                     this.name = name;
                     this.timeout = this._timeout = timeout;
                 }
-                reset() {
+                Timer.prototype.reset = function () {
                     this.timeout = this.timeout;
-                }
-                tick(fun) {
+                };
+                Timer.prototype.tick = function (fun) {
                     var me = this;
                     var tick = function () {
                         me.timeout--;
@@ -119,28 +123,32 @@ const utils = {
                     this.tid && clearInterval(this.tid);
                     this.tid = setInterval(tick, 1000);
                     tick();
-                }
-                clearInterval() {
+                };
+                Timer.prototype.clearInterval = function () {
                     clearInterval(this.tid);
-                }
-            }
+                };
+                return Timer;
+            }());
             timer = new Timer(name, timeout);
             utils.timers[name] = timer;
         }
-        timer.tick((rest) => {
+        timer.tick(function (rest) {
             ticker && ticker(rest);
         });
     },
     // sleep
-    sleep(duration = 1000) {
-        return new Promise(resolve => {
+    sleep: function (duration) {
+        if (duration === void 0) { duration = 1000; }
+        return new Promise(function (resolve) {
             setTimeout(resolve, duration);
         });
     },
     // 时间格式化
-    format(d = new Date(), fmt = 'yyyy-MM-dd HH:mm:ss') {
+    format: function (d, fmt) {
+        if (d === void 0) { d = new Date(); }
+        if (fmt === void 0) { fmt = 'yyyy-MM-dd HH:mm:ss'; }
         d = new Date(d);
-        let o = {
+        var o = {
             "M+": d.getMonth() + 1,
             "d+": d.getDate(),
             "h+": d.getHours() % 12 == 0 ? 12 : d.getHours() % 12,
@@ -150,14 +158,14 @@ const utils = {
             "q+": Math.floor((d.getMonth() + 3) / 3),
             "S": d.getMilliseconds()
         };
-        let week = ['日', '一', '二', '三', '四', '五', '六'];
+        var week = ['日', '一', '二', '三', '四', '五', '六'];
         if (/(y+)/.test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (d.getFullYear() + "").substr(4 - RegExp.$1.length));
         }
         if (/(E+)/.test(fmt)) {
             fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "星期" : "周") : "") + week[d.getDay()]);
         }
-        for (let k in o) {
+        for (var k in o) {
             if (new RegExp("(" + k + ")").test(fmt)) {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             }
@@ -165,13 +173,13 @@ const utils = {
         return fmt;
     },
     //获取或判断当前平台(android,ios,other)
-    platform(platform) {
-        const u = navigator.userAgent;
-        const app = navigator.appVersion;
-        const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-        const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        const p = isAndroid ? 'android' : isIOS ? 'ios' : 'other';
+    platform: function (platform) {
+        var u = navigator.userAgent;
+        var app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        var p = isAndroid ? 'android' : isIOS ? 'ios' : 'other';
         return platform ? (p === platform.toLowerCase()) : p;
     }
 };
-exports.default = utils;
+exports["default"] = utils;

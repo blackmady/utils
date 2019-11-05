@@ -1,12 +1,18 @@
 {
   "name": "@coon/utils",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "一个工具仓库",
   "main": "lib/index.js",
   "directories": {
     "lib": "lib"
   },
+  "typings": "./types/index.d.ts",
   "types": "./types/index.d.ts",
+  "files": [
+    "src",
+    "lib/*.js",
+    "types/*.d.ts"
+  ],
   "scripts": {
     "test": "tsc ./test/t.ts && nodemon ./test/t.js"
   },
@@ -40,5 +46,8 @@
     "nodemon": "^1.19.4",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@coon/utils": "^1.0.3"
   }
 }
