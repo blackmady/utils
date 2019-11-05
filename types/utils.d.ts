@@ -1,0 +1,23 @@
+declare const utils: {
+    getType(v: any): string;
+    isType(obj: any, type: string): boolean;
+    isObject(v: any): boolean;
+    isNumber(v: any): boolean;
+    isArray(v: any): boolean;
+    isBoolean(v: any): boolean;
+    isFunction(v: any): boolean;
+    isPercent(v: any): boolean;
+    isPlainObject(v: any): string;
+    isEmpty(v: any): boolean;
+    toArray(v: any): unknown[];
+    sortObject(obj: object): {};
+    merge(target: object, ...objs: object[]): any;
+    cached: (fn: Function) => Function;
+    search2Json: (search?: string | undefined) => any;
+    timers: any;
+    countdown: (name: string, timeout?: number | undefined, ticker?: Function | undefined) => void;
+    sleep(duration?: number): Promise<any>;
+    format(d?: Date, fmt?: string): string;
+    platform(platform?: string | undefined): boolean | "android" | "ios" | "other";
+};
+export default utils;
