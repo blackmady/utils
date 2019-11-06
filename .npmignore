@@ -13,3 +13,4 @@ eslintrc.js
 tsconfig.json
 note.md
 *.log
+*.txt

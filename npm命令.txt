@@ -1,0 +1,20 @@
+发布scope包
+npm publish --access public
+
+删除包版本
+npm deprecate @coon/utils@1.0.2 error
+
+提交版本
+npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease | from-git] -m "提交说明"
+
+major：主版本号
+
+minor：次版本号
+
+patch：补丁号
+
+premajor：预备主版本
+
+prepatch：预备次版本
+
+prerelease：预发布版本
