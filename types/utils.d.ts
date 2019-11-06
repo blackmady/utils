@@ -69,7 +69,8 @@ declare const utils: {
     /**
      * @description: 补零(前置)
      * @param {number|string} num   原数据
-     * @param {number} len  总长度
+     * @param {number} len  总长度:默认2
+     * @param {string} str  填补字符串:默认'0'
      * @return: string
      */
     zeroize(num: string | number, len?: number, str?: string): string;
