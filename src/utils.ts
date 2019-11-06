@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 11:29:27
- * @LastEditTime: 2019-11-06 11:49:05
+ * @LastEditTime: 2019-11-06 14:37:44
  * @LastEditors: None
  * @Description: 工具包
  */
@@ -32,7 +32,7 @@ const utils = {
   isObject(v: any): boolean {
     return typeof v === 'object'
   },
-    /**
+  /**
    * @description: 是否为数字类型
    * @param {any} v 
    * @return: boolean
@@ -40,7 +40,7 @@ const utils = {
   isNumber(v: any): boolean {
     return typeof v === 'number';
   },
-    /**
+  /**
    * @description: 是否为数组
    * @param {any} v 
    * @return: boolean
@@ -64,7 +64,7 @@ const utils = {
   isFunction(v: any): boolean {
     return typeof v === 'function'
   },
-    /**
+  /**
    * @description: 是否为百分比数值
    * @param {any} v 
    * @return: boolean
@@ -72,7 +72,7 @@ const utils = {
   isPercent(v: any): boolean {
     return /%$/.test(v + '');
   },
-    /**
+  /**
    * @description: 是否为原对象类型
    * @param {any} v 
    * @return: boolean
@@ -80,7 +80,7 @@ const utils = {
   isPlainObject(v: any): boolean {
     return utils.getType(v) === 'object';
   },
-    /** 
+  /** 
    * @description: 是否为空(0,'',undefined,null,false,{},[] 都被认为是空)
    * @param {any} v 
    * @return: boolean
@@ -92,7 +92,7 @@ const utils = {
     })[utils.getType(v)]
     return r === void (0) ? !v : r
   },
-    /** 
+  /** 
    * @description: 类数组转数组
    * @param {any} v 
    * @return: Array
@@ -100,7 +100,16 @@ const utils = {
   toArray(v: any):any[] {
     return Array.prototype.map.call(v, n => n);
   },
-    /** 
+  /** 
+   * @description: 补零(前置)
+   * @param {number|string} num   原数据
+   * @param {number} len  总长度
+   * @return: string
+   */
+  zeroize(num:number|string,len:number):string{
+    return num.toString().padStart(len,'0')
+  },
+  /** 
    * @description: 对象按key排序
    * @param {Object} obj
    * @return: Object

@@ -19,16 +19,16 @@ declare const utils: {
      */
     isObject(v: any): boolean;
     /**
-   * @description: 是否为数字类型
-   * @param {any} v
-   * @return: boolean
-   */
+     * @description: 是否为数字类型
+     * @param {any} v
+     * @return: boolean
+     */
     isNumber(v: any): boolean;
     /**
-   * @description: 是否为数组
-   * @param {any} v
-   * @return: boolean
-   */
+     * @description: 是否为数组
+     * @param {any} v
+     * @return: boolean
+     */
     isArray(v: any): boolean;
     /**
      * @description: 是否为布尔值
@@ -43,34 +43,41 @@ declare const utils: {
      */
     isFunction(v: any): boolean;
     /**
-   * @description: 是否为百分比数值
-   * @param {any} v
-   * @return: boolean
-   */
+     * @description: 是否为百分比数值
+     * @param {any} v
+     * @return: boolean
+     */
     isPercent(v: any): boolean;
     /**
-   * @description: 是否为原对象类型
-   * @param {any} v
-   * @return: boolean
-   */
+     * @description: 是否为原对象类型
+     * @param {any} v
+     * @return: boolean
+     */
     isPlainObject(v: any): boolean;
     /**
-   * @description: 是否为空(0,'',undefined,null,false,{},[] 都被认为是空)
-   * @param {any} v
-   * @return: boolean
-   */
+     * @description: 是否为空(0,'',undefined,null,false,{},[] 都被认为是空)
+     * @param {any} v
+     * @return: boolean
+     */
     isEmpty(v: any): boolean;
     /**
-   * @description: 类数组转数组
-   * @param {any} v
-   * @return: Array
-   */
+     * @description: 类数组转数组
+     * @param {any} v
+     * @return: Array
+     */
     toArray(v: any): any[];
     /**
-   * @description: 对象按key排序
-   * @param {Object} obj
-   * @return: Object
-   */
+     * @description: 补零(前置)
+     * @param {number|string} num   原数据
+     * @param {number} len  总长度
+     * @return: string
+     */
+    zeroize(num: string | number, len: number): string;
+    /**
+     * @description: 对象按key排序
+     * @param {Object} obj
+     * @return: Object
+     */
     sortObject(obj: object): Object;
     /**
      * @description: 把objs的对象属性合并到target中，深层合并，不同于Object.assign的单层合并，常用于函数的option类的参数与默认参数合并
