@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 11:29:27
- * @LastEditTime: 2019-11-06 14:37:44
+ * @LastEditTime: 2019-11-06 14:41:02
  * @LastEditors: None
  * @Description: 工具包
  */
@@ -106,8 +106,8 @@ const utils = {
    * @param {number} len  总长度
    * @return: string
    */
-  zeroize(num:number|string,len:number):string{
-    return num.toString().padStart(len,'0')
+  zeroize(num:number|string,len:number=2,str:string='0'):string{
+    return num.toString().padStart(len,str)
   },
   /** 
    * @description: 对象按key排序

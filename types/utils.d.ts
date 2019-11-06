@@ -72,7 +72,7 @@ declare const utils: {
      * @param {number} len  总长度
      * @return: string
      */
-    zeroize(num: string | number, len: number): string;
+    zeroize(num: string | number, len?: number, str?: string): string;
     /**
      * @description: 对象按key排序
      * @param {Object} obj
