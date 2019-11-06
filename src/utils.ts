@@ -1,32 +1,90 @@
+/*
+ * @Author: None
+ * @Date: 2019-11-05 11:29:27
+ * @LastEditTime: 2019-11-06 11:49:05
+ * @LastEditors: None
+ * @Description: 工具包
+ */
+
 const utils = {
-  getType(v: any) {
+  /**
+   * @description: 返回对象的类型全小写字符串
+   * @param {any} v 
+   * @return: string
+   */
+  getType(v: any): string {
     return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
   },
-  isType(obj: any, type: string) {
+  /**
+   * @description: 是否为某类型
+   * @param {any} obj 
+   * @param {string} type
+   * @return: boolean
+   */
+  isType(obj: any, type: string): boolean {
     return utils.getType(obj) === type
   },
-  isObject(v: any) {
+  /**
+   * @description: 是否为对象类型
+   * @param {any} v 
+   * @return: boolean
+   */
+  isObject(v: any): boolean {
     return typeof v === 'object'
   },
-  isNumber(v: any) {
+    /**
+   * @description: 是否为数字类型
+   * @param {any} v 
+   * @return: boolean
+   */
+  isNumber(v: any): boolean {
     return typeof v === 'number';
   },
-  isArray(v: any) {
+    /**
+   * @description: 是否为数组
+   * @param {any} v 
+   * @return: boolean
+   */
+  isArray(v: any): boolean {
     return Array.isArray(v)
   },
-  isBoolean(v: any) {
+  /**
+   * @description: 是否为布尔值
+   * @param {any} v 
+   * @return: boolean
+   */
+  isBoolean(v: any): boolean {
     return typeof v === 'boolean'
   },
-  isFunction(v: any) {
+  /**
+   * @description: 是否为函数类型
+   * @param {any} v 
+   * @return: boolean
+   */
+  isFunction(v: any): boolean {
     return typeof v === 'function'
   },
-  isPercent(v: any) {
+    /**
+   * @description: 是否为百分比数值
+   * @param {any} v 
+   * @return: boolean
+   */
+  isPercent(v: any): boolean {
     return /%$/.test(v + '');
   },
-  isPlainObject(v: any) {
-    return utils.getType(v === 'object');
+    /**
+   * @description: 是否为原对象类型
+   * @param {any} v 
+   * @return: boolean
+   */
+  isPlainObject(v: any): boolean {
+    return utils.getType(v) === 'object';
   },
-  // 是否为空(0,'',undefined,null,false,{},[] 都被认为是空)
+    /** 
+   * @description: 是否为空(0,'',undefined,null,false,{},[] 都被认为是空)
+   * @param {any} v 
+   * @return: boolean
+   */
   isEmpty(v: any): boolean {
     const r = ({
       object: (v: any) => !Object.keys(v).length,
@@ -34,18 +92,32 @@ const utils = {
     })[utils.getType(v)]
     return r === void (0) ? !v : r
   },
-  //类数组转数组
-  toArray(v: any) {
+    /** 
+   * @description: 类数组转数组
+   * @param {any} v 
+   * @return: Array
+   */
+  toArray(v: any):any[] {
     return Array.prototype.map.call(v, n => n);
   },
-  // 对象按key排序
-  sortObject(obj: object) {
+    /** 
+   * @description: 对象按key排序
+   * @param {Object} obj
+   * @return: Object
+   */
+  sortObject(obj: object):Object {
     let tmp = {};
     Object.keys(obj).sort((a, b) => a > b ? 1 : -1).forEach(key => tmp[key] = obj[key]);
     return tmp;
   },
-  // 把objs的对象属性合并到target中，深层合并，不同于Object.assign的单层合并，常用于函数的option类的参数与默认参数合并
-  merge(target: object, ...objs: Array<object>) {
+  
+  /** 
+   * @description: 把objs的对象属性合并到target中，深层合并，不同于Object.assign的单层合并，常用于函数的option类的参数与默认参数合并
+   * @param {Object} target
+   * @param {Array<Object>} objs
+   * @return: Object
+   */
+  merge(target: object, ...objs: Array<object>):Object {
     if (!objs.length) {
       objs = [target]
       target = {}
@@ -63,7 +135,11 @@ const utils = {
     let nobjs = objs.slice(1)
     return nobjs.length ? utils.merge(target, ...nobjs) : target
   },
-  // 缓存函数返回值
+  /** 
+   * @description: 根据单一参数缓存函数返回值
+   * @param {Function} fn
+   * @return: Function
+   */
   cached: (fn: Function): Function => {
     const cache: {} = Object.create(null)
     return function (str: string): any {
@@ -71,8 +147,12 @@ const utils = {
       return hit || (cache[str] = fn(str))
     }
   },
-  // querystring to json
-  search2Json: function (search?: string) {
+  /** 
+   * @description: querystring to json
+   * @param {string} search?
+   * @return: Object
+   */
+  search2Json: function (search?: string):Object {
     //无参数时默认返回window.location.search 转换成JSON后的对象
     //1个参数时把此参数当成search看待
     const obj = Object.create(null);
@@ -88,7 +168,14 @@ const utils = {
   },
   //简单倒计时
   timers: Object.create(null),
-  countdown: function (name: string, timeout?: number, ticker?: Function) {
+  /** 
+   * @description: 简单倒计时
+   * @param {string} name
+   * @param {number} timeout?
+   * @param {Function} ticker?
+   * @return: void
+   */
+  countdown: function (name: string, timeout?: number, ticker?: Function):void {
     let timer: any;
     if (utils.timers[name]) {
       timer = utils.timers[name];
@@ -130,13 +217,22 @@ const utils = {
       ticker && ticker(rest);
     });
   },
-  // sleep
+  /** 
+   * @description: sleep
+   * @param {number} duration?
+   * @return: Promise<any>
+   */
   sleep(duration = 1000): Promise<any> {
     return new Promise(resolve => {
       setTimeout(resolve, duration);
     })
   },
-  // 时间格式化
+  /** 
+   * @description: 时间格式化
+   * @param {number|striing|Date} d?
+   * @param {string} fmt?
+   * @return: string
+   */
   format(d = new Date(), fmt = 'yyyy-MM-dd HH:mm:ss') {
     d = new Date(d);
     let o = {
@@ -163,7 +259,11 @@ const utils = {
     }
     return fmt;
   },
-  //获取或判断当前平台(android,ios,other)
+  /** 
+   * @description: 获取或判断当前平台(android,ios,other)
+   * @param {string} platform?
+   * @return: string
+   */
   platform(platform?: string) {
     const u = navigator.userAgent
     const app = navigator.appVersion;
