@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 11:29:27
- * @LastEditTime: 2019-11-06 14:45:54
+ * @LastEditTime: 2019-11-06 16:42:14
  * @LastEditors: None
  * @Description: 工具包
  */
@@ -136,7 +136,7 @@ const utils = {
     for (let key in obj) {
       let tv = target[key]
       let ov = obj[key]
-      if (utils.isObject(tv) && utils.isObject(ov)) {
+      if (utils.isPlainObject(tv) && utils.isPlainObject(ov)) {
         utils.merge(target[key], obj[key])
         continue
       }
