@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 11:29:27
- * @LastEditTime: 2019-11-06 16:42:14
+ * @LastEditTime: 2019-11-07 12:19:30
  * @LastEditors: None
  * @Description: 工具包
  */
@@ -97,7 +97,7 @@ const utils = {
    * @param {any} v 
    * @return: Array
    */
-  toArray(v: any):any[] {
+  toArray(v: any): any[] {
     return Array.prototype.map.call(v, n => n);
   },
   /** 
@@ -107,27 +107,28 @@ const utils = {
    * @param {string} str  填补字符串:默认'0'
    * @return: string
    */
-  zeroize(num:number|string,len:number=2,str:string='0'):string{
-    return num.toString().padStart(len,str)
+  zeroize(num: number | string, len: number = 2, str: string = '0'): string {
+    return num.toString().padStart(len, str)
   },
   /** 
    * @description: 对象按key排序
    * @param {Object} obj
    * @return: Object
    */
-  sortObject(obj: object):Object {
+  sortObject(obj: object): Object {
     let tmp = {};
     Object.keys(obj).sort((a, b) => a > b ? 1 : -1).forEach(key => tmp[key] = obj[key]);
     return tmp;
   },
-  
+
   /** 
    * @description: 把objs的对象属性合并到target中，深层合并，不同于Object.assign的单层合并，常用于函数的option类的参数与默认参数合并
    * @param {Object} target
    * @param {Array<Object>} objs
    * @return: Object
    */
-  merge(target: object, ...objs: Array<object>):Object {
+  merge(target: object | undefined | null, ...objs: Array<object>): Object {
+    if (target === void (0) || target === null) target = {}
     if (!objs.length) {
       objs = [target]
       target = {}
@@ -162,7 +163,7 @@ const utils = {
    * @param {string} search?
    * @return: Object
    */
-  search2Json: function (search?: string):Object {
+  search2Json: function (search?: string): Object {
     //无参数时默认返回window.location.search 转换成JSON后的对象
     //1个参数时把此参数当成search看待
     const obj = Object.create(null);
@@ -185,7 +186,7 @@ const utils = {
    * @param {Function} ticker?
    * @return: void
    */
-  countdown: function (name: string, timeout?: number, ticker?: Function):void {
+  countdown: function (name: string, timeout?: number, ticker?: Function): void {
     let timer: any;
     if (utils.timers[name]) {
       timer = utils.timers[name];
