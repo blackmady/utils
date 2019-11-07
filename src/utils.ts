@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 11:29:27
- * @LastEditTime: 2019-11-07 14:20:27
+ * @LastEditTime: 2019-11-07 14:36:58
  * @LastEditors: None
  * @Description: 工具包
  */
@@ -129,10 +129,9 @@ const utils = {
    * @return: Object
    */
   merge(target={}, ...objs: Array<object>): Object {
-    if (!utils.isPlainObject(target)) target = {}
+    if (!utils.isPlainObject(target)) target = Object.create(null)
     if (!objs.length) {
-      objs = [target]
-      target = {}
+      return target
     }
     let obj = objs.shift()
     for (let key in obj) {
