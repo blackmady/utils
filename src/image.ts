@@ -34,15 +34,15 @@ export function base64ToBlob(base64) {
  * @param {string|File|HTMLImageElement} img 图片
  * @param {number} quality 图片质量
  * @param {string} imgExt 图片类型
- * @return: Promise<{image:HTMLImageElement,dataURL:string,size:number,width:number,height:number}>
+ * @return: Promise<{dataURL:string,size:number,width:number,height:number}>
  */
-export function imageInfo(img: string | File | HTMLImageElement, quality = 1, imgExt = 'image/jpeg') {
+export function imageInfo(img: string | File | HTMLImageElement, quality: number = 1, imgExt: string = 'image/jpeg'):Promise<{dataURL:string,size:number,width:number,height:number}> {
     const image = new Image()
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     let size = 0
     let dataURL = ''
-    if (<File>img) {
+    if (img instanceof File) {
         size = (img as File).size
         const reader = new FileReader()
         reader.readAsDataURL(<File>img)
@@ -50,13 +50,13 @@ export function imageInfo(img: string | File | HTMLImageElement, quality = 1, im
             dataURL = (e.target as FileReader).result as string
             image.src = dataURL
         }
-    } else if (<string>img) {
+    } else if (typeof img==='string') {
         const src = img as string
         if (src.match(/^(\/\/)|(http\:\/\/)|(https\:\/\/)/)) {
             image.crossOrigin = 'Anonymous'
         }
         image.src = img as string
-    } else if (<HTMLImageElement>img) {
+    } else if (img instanceof HTMLImageElement) {
         image.src = (img as HTMLImageElement).src
     }
     return new Promise((resolve, reject) => {

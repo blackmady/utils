@@ -4,9 +4,14 @@ export declare function base64ToBlob(base64: any): Blob;
  * @param {string|File|HTMLImageElement} img 图片
  * @param {number} quality 图片质量
  * @param {string} imgExt 图片类型
- * @return: Promise<{image:HTMLImageElement,dataURL:string,size:number,width:number,height:number}>
+ * @return: Promise<{dataURL:string,size:number,width:number,height:number}>
  */
-export declare function imageInfo(img: string | File | HTMLImageElement, quality?: number, imgExt?: string): Promise<unknown>;
+export declare function imageInfo(img: string | File | HTMLImageElement, quality?: number, imgExt?: string): Promise<{
+    dataURL: string;
+    size: number;
+    width: number;
+    height: number;
+}>;
 /** 压缩图片
  * @param {Object} file 上传对象files[0]
  * @param {Object} options 压缩设置对象
