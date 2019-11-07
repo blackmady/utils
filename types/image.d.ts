@@ -1,4 +1,12 @@
 export declare function base64ToBlob(base64: any): Blob;
+/**
+ * @description: 获取图片信息
+ * @param {string|File|HTMLImageElement} img 图片
+ * @param {number} quality 图片质量
+ * @param {string} imgExt 图片类型
+ * @return: Promise<{image:HTMLImageElement,dataURL:string,size:number,width:number,height:number}>
+ */
+export declare function imageInfo(img: string | File | HTMLImageElement, quality?: number, imgExt?: string): Promise<unknown>;
 /** 压缩图片
  * @param {Object} file 上传对象files[0]
  * @param {Object} options 压缩设置对象
