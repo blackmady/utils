@@ -82,6 +82,7 @@ declare const utils: {
     sortObject(obj: object): Object;
     /**
      * @description: 把objs的对象属性合并到target中，深层合并，不同于Object.assign的单层合并，常用于函数的option类的参数与默认参数合并
+     * 最终返回结果就是修改后的target,如果不想有target引用，把{}或null加到第一个参数即可
      * @param {Object} target
      * @param {Array<Object>} objs
      * @return: Object
