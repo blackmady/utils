@@ -86,7 +86,7 @@ declare const utils: {
      * @param {Array<Object>} objs
      * @return: Object
      */
-    merge(target: object, ...objs: object[]): Object;
+    merge(target?: {}, ...objs: object[]): Object;
     /**
      * @description: 根据单一参数缓存函数返回值
      * @param {Function} fn

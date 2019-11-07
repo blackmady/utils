@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 11:29:27
- * @LastEditTime: 2019-11-07 12:19:30
+ * @LastEditTime: 2019-11-07 13:01:31
  * @LastEditors: None
  * @Description: 工具包
  */
@@ -127,8 +127,8 @@ const utils = {
    * @param {Array<Object>} objs
    * @return: Object
    */
-  merge(target: object | undefined | null, ...objs: Array<object>): Object {
-    if (target === void (0) || target === null) target = {}
+  merge(target={}, ...objs: Array<object>): Object {
+    if (!utils.isPlainObject(target)) target = {}
     if (!objs.length) {
       objs = [target]
       target = {}
