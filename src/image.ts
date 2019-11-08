@@ -52,8 +52,8 @@ export function imageInfo(img: string | File | HTMLImageElement, quality: number
         }
     } else if (typeof img==='string') {
         const src = img as string
-        if (src.match(/^(\/\/)|(http\:\/\/)|(https\:\/\/)/)) {
-            image.crossOrigin = 'Anonymous'
+        if (src.match(/^(\/\/)|(http\:\/\/)|(https\:\/\/)|(data\:image\/)/)) {
+            image.crossOrigin = '*' //'Anonymous'
         }
         image.src = img as string
     } else if (img instanceof HTMLImageElement) {
