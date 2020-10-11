@@ -1,7 +1,7 @@
 /*
  * @Author: None
  * @Date: 2019-11-05 12:24:57
- * @LastEditTime: 2019-11-06 12:06:19
+ * @LastEditTime: 2020-10-11 12:30:50
  * @LastEditors: None
  * @Description: localStorage,sessionStorage,cookie 三者的CURD操作
  */
@@ -36,7 +36,7 @@ export default {
    * @param {Storage} store?
    * @return: object|null
    */
-  store(key: string, value: any, time: number = 1e14, store: Storage = localStorage) {
+  store(key: string, value?: any, time: number = 1e14, store: Storage = localStorage) {
     const now = Date.now()
     if (typeof value === 'undefined') {
       const obj = this.getItem(key)
@@ -66,7 +66,7 @@ export default {
   * @param {number} time
   * @return: void|null
   */
-  local(key: string, value: any, time: number) {
+  local(key: string, value?: any, time?: number) {
     return this.store(key, value, time, localStorage)
   },
   /**
@@ -76,7 +76,7 @@ export default {
   * @param {number} time
   * @return: void|null
   */
-  session(key: string, value: any, time: number) {
+  session(key: string, value?: any, time?: number) {
     return this.store(key, value, time, sessionStorage)
   },
   /**
