@@ -147,7 +147,7 @@ class GlobalTimer{
     }
   }
   // 注册一个计时器
-  add(opt:IOption){
+  add(opt: IOption) {
     const timer:ITimer={
       step:-1,
       name:guid(),
@@ -161,6 +161,13 @@ class GlobalTimer{
       end:0,
       interval:1000,
       ...opt,
+      tick: () => { },
+      timeup: () => { },
+      reset: () => { },
+      pause: () => { },
+      resume: () => { },
+      on: () => { },
+      off: () => { },
     }
     timer.step??=Math.sign(timer.start-timer.end);
     timer.value=timer.start!;

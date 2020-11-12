@@ -13,6 +13,12 @@ declare const utils: {
      */
     isType(obj: any, type: string): boolean;
     /**
+     * @description: 是否未定义,undefine或null
+     * @param {any} obj
+     * @return: boolean
+     */
+    isUndef(obj: any): boolean;
+    /**
      * @description: 是否为对象类型
      * @param {any} v
      * @return: boolean
@@ -73,7 +79,7 @@ declare const utils: {
      * @param {string} str  填补字符串:默认'0'
      * @return: string
      */
-    zeroize(num: string | number, len?: number, str?: string): string;
+    zeroize(num: number | string, len?: number, str?: string): string;
     /**
      * @description: 对象按key排序
      * @param {Object} obj
@@ -87,7 +93,7 @@ declare const utils: {
      * @param {Array<Object>} objs
      * @return: Object
      */
-    merge(target?: {}, ...objs: object[]): Object;
+    merge(target?: {}, ...objs: Array<object>): Object;
     /**
      * @description: 根据单一参数缓存函数返回值
      * @param {Function} fn

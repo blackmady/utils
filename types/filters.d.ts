@@ -14,7 +14,7 @@ export declare const filters: {
     tmCall: (tel?: string) => string;
     /**格式化*/
     /**格式化时间*/
-    formatTime(d?: Date, fmt?: string | boolean): string;
+    formatTime(d?: Date, fmt?: boolean | string): string;
     /**格式化如下格式的时间201601080952134*/
     formatTime2(d: string | number, fmt?: string): string;
     /**格式化金额值，带逗号,u为单位字符串*/
@@ -30,5 +30,5 @@ export declare const filters: {
      * @param {string} str  填补字符串:默认'0'
      * @return: string
      */
-    zeroize: (num: string | number, len?: number, str?: string) => string;
+    zeroize: (num: number | string, len?: number, str?: string) => string;
 };

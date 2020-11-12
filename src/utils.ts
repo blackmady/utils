@@ -148,7 +148,7 @@ const utils = {
       let tv = target[key];
       let ov = obj[key];
       if (utils.isPlainObject(tv) && utils.isPlainObject(ov)) {
-        utils.merge(target[key], obj[key]);
+        target[key] = utils.merge({},target[key], obj[key]);
         continue;
       }
       target[key] = obj[key];
