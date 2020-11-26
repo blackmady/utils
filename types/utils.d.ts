@@ -114,7 +114,7 @@ declare const utils: {
      * @param {Function} ticker?
      * @return: void
      */
-    countdown: (name: string, timeout?: number | undefined, ticker?: Function | undefined) => void;
+    countdown(name: string, timeout?: number | undefined, ticker?: Function | undefined): void;
     /**
      * @description: sleep
      * @param {number} duration?

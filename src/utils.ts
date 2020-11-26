@@ -199,7 +199,7 @@ const utils = {
    * @param {Function} ticker?
    * @return: void
    */
-  countdown: function (
+  countdown(
     name: string,
     timeout?: number,
     ticker?: Function
