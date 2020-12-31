@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @Author: None
  * @LastEditors: None
@@ -12,6 +13,19 @@ timer.countdown({}).tick(rest=>{
 
 })
 */
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+exports.Timer = void 0;
 // 计时器状态
 var timerStatus;
 (function (timerStatus) {
@@ -31,7 +45,7 @@ function guid() {
     });
 }
 // 计时器静态库
-const timer = {
+var timer = {
     timestamps: {},
     timers: {},
     /**
@@ -39,7 +53,7 @@ const timer = {
      * @param {string} name
      * @return boolean
      */
-    exist(name) {
+    exist: function (name) {
         return !!this.timers[name];
     },
     /**
@@ -53,7 +67,7 @@ const timer = {
      * @description: 获取当前相对时间戳
      * @return number
      */
-    timestamp() {
+    timestamp: function () {
         var _a;
         return ((_a = performance === null || performance === void 0 ? void 0 : performance.now) === null || _a === void 0 ? void 0 : _a.call(performance)) || Date.now();
     },
@@ -62,7 +76,7 @@ const timer = {
      * @param {ITimerOption} opt
      * @return Timer
      */
-    create(opt) {
+    create: function (opt) {
         return new Timer(opt);
     },
     /**
@@ -70,14 +84,14 @@ const timer = {
      * @param {countdownOption} opt
      * @return Timer
      */
-    countdown(opt) {
+    countdown: function (opt) {
         var _a;
-        const defOpt = {
+        var defOpt = {
             auto: true,
             name: guid(),
             interval: 1000,
             start: 0,
-            end: 0,
+            end: 0
         };
         if (typeof opt === 'number') {
             opt = { start: opt };
@@ -85,12 +99,12 @@ const timer = {
         else if (typeof opt === 'string') {
             return this.timers[opt];
         }
-        opt = Object.assign(Object.assign({}, defOpt), opt);
+        opt = __assign(__assign({}, defOpt), opt);
         if (this.timers[opt.name]) {
             // console.warn(`计时器${opt.name}已存在，将被覆盖！`)
             (_a = this.timers[opt.name]) === null || _a === void 0 ? void 0 : _a.destroy();
         }
-        const newTimer = this.create(opt);
+        var newTimer = this.create(opt);
         this.timers[opt.name] = newTimer;
         return opt.auto ? newTimer.start() : newTimer;
     },
@@ -99,7 +113,8 @@ const timer = {
      * @param {string} name
      * @return number
      */
-    time(name = 'none') {
+    time: function (name) {
+        if (name === void 0) { name = 'none'; }
         return this.timestamps[name] = this.timestamp();
     },
     /**
@@ -107,7 +122,8 @@ const timer = {
      * @param {string} name
      * @return number
      */
-    timeLog(name = 'none') {
+    timeLog: function (name) {
+        if (name === void 0) { name = 'none'; }
         return this.timestamp() - this.timestamps[name];
     },
     /**
@@ -115,15 +131,16 @@ const timer = {
      * @param {string} name
      * @return number
      */
-    timeEnd(name = 'none') {
-        const r = this.timeLog(name);
+    timeEnd: function (name) {
+        if (name === void 0) { name = 'none'; }
+        var r = this.timeLog(name);
         delete this.timestamps[name];
         return r;
     }
 };
 // 计时器类
-export class Timer {
-    constructor(opt) {
+var Timer = /** @class */ (function () {
+    function Timer(opt) {
         this.setTimeout = window.requestAnimationFrame.bind(window) || window.setTimeout.bind(window);
         this.clearTimeout = window.cancelAnimationFrame.bind(window) || window.clearTimeout.bind(window);
         this.hz = opt.hz || 1000;
@@ -142,14 +159,15 @@ export class Timer {
             this.clearTimeout = window.clearTimeout.bind(window);
         }
     }
-    destroy() {
+    Timer.prototype.destroy = function () {
         this.stop();
-    }
-    start() {
+    };
+    Timer.prototype.start = function () {
+        var _this = this;
         this.startTime = timer.timestamp();
-        const sign = Math.sign(this.begin - this.end);
-        let resetTime = this.startTime;
-        let times = 0;
+        var sign = Math.sign(this.begin - this.end);
+        var resetTime = this.startTime;
+        var times = 0;
         // 定义计时器
         // const globalTimer=new GlobalTimer()
         // const myTimer=globalTimer.add({start:120}).get();
@@ -159,55 +177,58 @@ export class Timer {
         // }).timeup(()=>{
         //   this.stop();
         // })
-        const tickTimer = (interval, timerTick = () => { }) => {
-            const curTime = timer.timestamp();
+        var tickTimer = function (interval, timerTick) {
+            if (timerTick === void 0) { timerTick = function () { }; }
+            var curTime = timer.timestamp();
             if (curTime - resetTime >= interval) {
-                times = Math.floor((curTime - this.startTime) / interval);
+                times = Math.floor((curTime - _this.startTime) / interval);
                 resetTime = curTime;
                 // timerTick();
-                this.setTimeout(timerTick);
+                _this.setTimeout(timerTick);
             }
-            this.tid = this.setTimeout(() => tickTimer(interval, timerTick), this.hz);
+            _this.tid = _this.setTimeout(function () { return tickTimer(interval, timerTick); }, _this.hz);
         };
-        tickTimer(this.interval, () => {
-            const progress = this.begin - sign * times;
-            this.ticks.forEach(tick => tick(!sign ? times : progress));
-            if (progress < this.end + 1) {
-                this.timeups.forEach(timeup => timeup());
-                this.stop();
+        tickTimer(this.interval, function () {
+            var progress = _this.begin - sign * times;
+            _this.ticks.forEach(function (tick) { return tick(!sign ? times : progress); });
+            if (progress < _this.end + 1) {
+                _this.timeups.forEach(function (timeup) { return timeup(); });
+                _this.stop();
             }
         });
         return this;
-    }
-    pause() {
+    };
+    Timer.prototype.pause = function () {
         if (this.status === timerStatus.finished)
             return false;
         this.status = timerStatus.suspend;
-    }
-    resume() {
+    };
+    Timer.prototype.resume = function () {
         this.status = timerStatus.progress;
-    }
-    stop() {
+    };
+    Timer.prototype.stop = function () {
         this.clearTimeout(this.tid);
         this.status = timerStatus.finished;
-    }
-    on(name, fun) {
+    };
+    Timer.prototype.on = function (name, fun) {
         this[({ tick: 'ticks', timeup: 'timeups' })[name]].push(fun);
         return this;
-    }
-    off(name, fun) {
-        const events = this[({ tick: 'ticks', timeup: 'timeups' })[name]];
-        const idx = events.findIndex(item => item === fun);
+    };
+    Timer.prototype.off = function (name, fun) {
+        var events = this[({ tick: 'ticks', timeup: 'timeups' })[name]];
+        var idx = events.findIndex(function (item) { return item === fun; });
         idx && events.splice(idx, 1);
         return this;
-    }
-    tick(fun) {
+    };
+    Timer.prototype.tick = function (fun) {
         this.ticks.push(fun);
         return this;
-    }
-    timeup(fun) {
+    };
+    Timer.prototype.timeup = function (fun) {
         this.timeups.push(fun);
         return this;
-    }
-}
-export default timer;
+    };
+    return Timer;
+}());
+exports.Timer = Timer;
+exports["default"] = timer;
